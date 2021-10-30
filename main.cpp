@@ -1,8 +1,12 @@
+//Nihal Parthasarathy
+//10/23/2021
+//This code lets the user play a tic tac toe game in the console by placing X and Os in a 3 by 3 grid and trying to get 3 in a row
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 
+//Initilizes struct
 struct game {
   int board[3][3];
   int turn;
@@ -10,12 +14,15 @@ struct game {
 
 };
 
+//Calls the functions
 void printBoard(game board);
 bool checkWinX(game newboard);
 bool checkWinO(game newboard);
 bool checkTie(game newboard);
 
 int main() {
+
+  //Initilizes Varubles
   struct game newboard;
   struct game X;
   struct game O;
@@ -31,23 +38,24 @@ int main() {
   char str2[1];
   int whosturn = X.turn;
   bool stillPlaying = true;
-  while (stillPlaying == true) {
 
-  
+  //Sets the internal board to all blanks
+  while (stillPlaying == true) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
 	newboard.board[i][j] = BLANK;
       }
     }
+    
     whosturn = X.turn;
-    while (checkWinX(newboard) == false && checkWinO(newboard) == false && checkTie(newboard) == false) {
-      
-      printBoard(newboard);
-      
-      cout << "Enter a letter followed by a number" << endl;
 
+    //Checks to see if any of these conditions have happend and if they havnt conties the game
+    while (checkWinX(newboard) == false && checkWinO(newboard) == false && checkTie(newboard) == false) {  
+      printBoard(newboard);
+      cout << "Enter a letter followed by a number" << endl;
       cin.get(str, 3);
       cin.get();
+      //Checks to see if there is any invalid moves
       if (str[0] != 'a' && str[0] != 'b' && str[0] != 'c') {
 	cout << "first letter must be a b or c" << endl;
       }
@@ -59,9 +67,8 @@ int main() {
 	for (int row = 0; row < 1; row++) {
 	  for (int colum = 0; colum < 1; colum ++) {
 
-
+	    //Sets the internal array to X if the space is blank and its X's turn
 	    if (whosturn == X.turn) {
-
 	  
 	      if (str[0] == 'a' && str[1] == '1' && newboard.board[0][0] == BLANK) {
 		newboard.board[0][0] = X.move;
@@ -101,11 +108,10 @@ int main() {
 	      }
 	      else {
 		cout << "Iligal move! Try again" << endl;
-	      }
-	  
-	  
+	      }	  
 	    }
-	
+
+	    //Sets the internal array to O if the space is blank and its O's turn
 	    else {
 	      if (str[0] == 'a' && str[1] == '1' && newboard.board[0][0] == BLANK) {
 		newboard.board[0][0] = O.move;
@@ -166,6 +172,8 @@ int main() {
       cout << "Tie!" << endl;
       ties++;
     }
+
+    //Asks the user if they want to play agin and if they do restarts the game and sets the board to blanks
     cout << "X has won " << Xwins << " times, O has won " << Owins << " times, there have been " << ties << " ties" << endl;
     cout << "Play again?  y or n" << endl;
     cin.get(str2, 2);
@@ -187,7 +195,7 @@ int main() {
 }
 
 void printBoard(game newboard) {
-  //struct game newboard;
+  //Prints the board
   int num = 1;
   cout << "  a b c" << endl;
   for (int i = 0; i < 3; i++) {
@@ -205,7 +213,6 @@ void printBoard(game newboard) {
        if (newboard.board[i][j] == 2) {
 	 cout << 'O';
        }
-      //cout << newboard.board[i][j] << endl;
     }
     cout << '\0' << endl;
   }
@@ -213,6 +220,7 @@ void printBoard(game newboard) {
 }
 
 bool checkWinX(game newboard) {
+  //Checks to see if X has won
   if (newboard.board[0][0] == 1 && newboard.board[0][1] == 1 && newboard.board[0][2] == 1) {
     return true;
   }
@@ -244,6 +252,7 @@ bool checkWinX(game newboard) {
 }
 
 bool checkWinO(game newboard) {
+  //Checks to see if O has won
   if (newboard.board[0][0] == 2 && newboard.board[0][1] == 2 && newboard.board[0][2] == 2) {
     return true;
   }
@@ -275,6 +284,7 @@ bool checkWinO(game newboard) {
 }
 
 bool checkTie(game newboard) {
+  //Checks to see if there is a tie
   bool temp = true;
   for (int row = 0; row < 3; row++) {
     for (int colum = 0; colum < 3; colum++) {
